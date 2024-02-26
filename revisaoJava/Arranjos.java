@@ -1,4 +1,4 @@
-package revisao;
+package revisaoJava;
 import java.util.Arrays;
 
 public class Arranjos {

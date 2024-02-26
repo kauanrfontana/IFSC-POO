@@ -1,4 +1,4 @@
-package revisao;
+package revisaoJava;
 // OlaMundo.java
 public class OlaMundo{
 
