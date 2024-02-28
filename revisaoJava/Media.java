@@ -1,18 +1,16 @@
 package revisaoJava;
-import java.util.Scanner; 
 
 public class Media {
     public static void main(String[] args){
-        Scanner keyboard = new Scanner(System.in);
-        
-        System.out.print("Entre com sua nota do primeiro projeto prático: ");
-        Float firstProject = keyboard.nextFloat();
+        if(args.length < 3){
+            System.out.println("Por favor, passe todos os argumentos necessários!");
+            return;
+        }
+        Float firstProject = Float.parseFloat(args[0]);
 
-        System.out.print("Entre com sua nota do segundo projeto prático: ");
-        Float secondProject = keyboard.nextFloat();
+        Float secondProject = Float.parseFloat(args[1]);
 
-        System.out.print("Entre com sua nota de participação: ");
-        Float participation = keyboard.nextFloat();
+        Float participation = Float.parseFloat(args[2]);
 
         Float average = (firstProject + secondProject + participation) / 3;
 
@@ -29,6 +27,5 @@ public class Media {
 
 
         
-        keyboard.close();
     }
 }
