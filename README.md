@@ -19,3 +19,8 @@ java File
 ```
 Para executar esse arquivo compilado, você usa o comando java seguido do nome da classe principal, não do nome do arquivo Java.
 
+## Em pastas com aplicações GRADLE
+para executar use:
+```BASH
+./gradlew run
+```
