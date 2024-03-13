@@ -6,8 +6,12 @@ package ads.poo;
 public class App {
 
     public static void main(String[] args) {
-        BuzzLightyear buzzLightyear = new BuzzLightyear();
+        Person p = new Person();
+        p.setName("Pessoa");
+        p.setCpf("123.123.123-23");
+        p.setEmail("a@a.com");
 
+        System.out.println(p);
 
     };
 }
