@@ -5,8 +5,22 @@ package ads.poo;
 
 
 public class Pen {
-    private String color = "Preta";
-    private int capacity = 100;
+    private String color;
+    private int capacity;
+
+
+    public Pen(String color, int capacity) {
+        this.color = color;
+        this.capacity = capacity;
+    }
+
+    public Pen(String color) {
+        this(color, 100);
+    }
+
+    public Pen() {
+        this("Vermelha", 100);
+    }
 
     public String drawing(){
         if(capacity == 0){

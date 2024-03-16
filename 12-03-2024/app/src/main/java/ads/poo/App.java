@@ -6,12 +6,8 @@ package ads.poo;
 public class App {
 
     public static void main(String[] args) {
-        Person p = new Person();
-        p.setName("Pessoa");
-        p.setCpf("123.123.123-23");
-        p.setEmail("a@a.com");
-
-        System.out.println(p);
+        Car car = new Car(200);
+        System.out.println(car.getCurrentSpeed());
 
     };
 }

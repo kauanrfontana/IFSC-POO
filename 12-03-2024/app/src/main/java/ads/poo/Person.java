@@ -5,16 +5,21 @@ package ads.poo;
 
 
 public class Person {
-    private String Cpf;
+    private String cpf;
     private String name;
     private String email;
 
+    public Person(String cpf, String name, String email){
+        this.cpf = cpf;
+        this.name = name;
+        this.email = email;
+    }
     public String getCpf() {
-        return Cpf;
+        return cpf;
     }
 
-    public void setCpf(String Cpf) {
-        this.Cpf = Cpf;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getName() {
@@ -33,10 +38,9 @@ public class Person {
         this.email = email;
     }
 
-    @Override
     public String toString() {
         return "Person{" +
-                "Cpf='" + Cpf + '\'' +
+                "cpf='" + cpf + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 '}';
