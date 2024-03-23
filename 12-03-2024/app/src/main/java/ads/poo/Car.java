@@ -1,23 +1,16 @@
 package ads.poo;
 public class Car {
     private int currentSpeed;
-    private int underLimit = 0;
-    private int aboveLimit = 200;
+    private final int UNDER_LIMIT = 0;
+    private final  int ABOVE_LIMIT = 200;
 
     public int getUnderLimit() {
-        return underLimit;
+        return UNDER_LIMIT;
     }
 
-    public void setUnderLimit(int underLimit) {
-        this.underLimit = underLimit;
-    }
 
     public int getAboveLimit() {
-        return aboveLimit;
-    }
-
-    public void setAboveLimit(int aboveLimit) {
-        this.aboveLimit = aboveLimit;
+        return ABOVE_LIMIT;
     }
 
     public int getCurrentSpeed() {
@@ -58,11 +51,11 @@ public class Car {
     }
 
     public boolean isAboveLimit(int number){
-        return number > this.aboveLimit;
+        return number > this.ABOVE_LIMIT;
     }
 
     public boolean isUnderLimit(int number){
-        return number < this.underLimit;
+        return number < this.UNDER_LIMIT;
     }
 
 }
