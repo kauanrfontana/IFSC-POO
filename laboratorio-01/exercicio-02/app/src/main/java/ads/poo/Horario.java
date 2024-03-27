@@ -87,14 +87,79 @@ public class Horario {
         return false;
     }
 
-    public String numeroParaExtenso(int numero){
+    public String tempoPorExtenso(){
+        return unidadeDeTempoParaExtenso(this.horas, true) + " hora(s), " + unidadeDeTempoParaExtenso(this.minutos, false) + " minuto(s) e " + unidadeDeTempoParaExtenso(this.segundos, false) + " segundo(s).";
+    }
+
+    public String unidadeDeTempoParaExtenso(int unidade, boolean isHora){
+        String unidadeExtenso = "";
+        if(unidade % 10 == 0 || unidade < 20){
+            unidadeExtenso = this.numeroParaExtenso(unidade, isHora);
+        }else{
+            int dezena = (int)Math.floor(unidade / 10) * 10;
+            unidadeExtenso = this.numeroParaExtenso(dezena, isHora) + " e " + this.numeroParaExtenso(unidade - dezena, isHora);
+        }
+        return unidadeExtenso;
+    }
+
+    public String numeroParaExtenso(int numero, boolean isHora){
         switch (numero){
             case 1:
-                return "um";
-                break;
+                return isHora ? "uma" : "um";
             case 2:
-                return "dois";
-                
+                return isHora ? "duas" : "dois";
+            case 3:
+                return "três";
+            case 4:
+                return "quatro";
+            case 5:
+                return "cinco";
+            case 6:
+                return "seis";
+            case 7:
+                return "sete";
+            case 8:
+                return "oito";
+            case 9:
+                return "nove";
+            case 10:
+                return "dez";
+            case 11:
+                return "onze";
+            case 12:
+                return "doze";
+            case 13:
+                return "treze";
+            case 14:
+                return "quatorze";
+            case 15:
+                return "quinze";
+            case 16:
+                return "dezeseis";
+            case 17:
+                return "dezesete";
+            case 18:
+                return "dezoito";
+            case 19:
+                return "dezenove";
+            case 20:
+                return "vinte";
+            case 30:
+                return "trinta";
+            case 40:
+                return "quarenta";
+            case 50:
+                return "cinquenta";
+
         }
+        return "zero";
+    }
+
+    public long tempoEmSegundos(){
+        return (((this.horas * 60) * 60) + (this.minutos * 60) + this.segundos);
+    }
+
+    public long diferencaHorarios(Horario horario){
+        return Math.abs(this.tempoEmSegundos() - horario.tempoEmSegundos());
     }
 }
