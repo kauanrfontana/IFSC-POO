@@ -47,13 +47,17 @@ public class Livro {
         this.isbn = isbn;
     }
 
+    public boolean addAutor(Autor autor){
+        return this.autores.add(autor);
+    }
+
     @Override
     public String toString() {
-        return "Livro{" +
-                "titulo='" + titulo + '\'' +
-                ", preco=" + preco +
-                ", autores=" + autores +
-                ", isbn='" + isbn + '\'' +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        for(Autor autor : this.autores){
+            sb.append(autor);
+        }
+        return String.format("ISBN: %s, Título: %s, Preço: %4.3f, Autores: \n %s", this.isbn, this.titulo, this.preco, sb);
+
     }
 }
