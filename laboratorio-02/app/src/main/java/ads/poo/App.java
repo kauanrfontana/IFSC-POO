@@ -16,8 +16,12 @@ public class App {
         emails.add(new Email("Profissional", "kfontana@paytech.com.br"));
         Contato contato = new Contato("Kauan", "Ramos Fontana", LocalDate.of(2005, 6, 22), telefones, emails);
 
+        ArrayList<Contato> contatos = new ArrayList<Contato>();
+        contatos.add(contato);
 
-        System.out.println(contato);
+        Agenda agenda = new Agenda(contatos);
+
+        System.out.println(agenda);
 
     }
 }
