@@ -45,21 +45,24 @@ public class Agenda {
         return this.contatos.get(index).removeEmail(emailIndex);
     }
 
+    public Contato getContato(int index){
+        return this.contatos.get(index);
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("(");
         for(int i = 0; i < this.contatos.size(); i++){
+            sb.append("\n");
             sb.append(i);
             sb.append(" - ");
-            sb.append("(");
+            sb.append("[");
             sb.append(this.contatos.get(i));
-            sb.append(")");
+            sb.append("\n\t]");
             if(i != this.contatos.size() -1){
                 sb.append(", ");
             }
         }
-        sb.append(")");
 
         return sb.toString();
     }

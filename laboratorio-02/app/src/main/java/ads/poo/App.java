@@ -5,8 +5,10 @@ package ads.poo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class App {
+    public Agenda agenda;
 
     public static void main(String[] args) {
         ArrayList<Telefone> telefones = new ArrayList<Telefone>();
@@ -16,12 +18,65 @@ public class App {
         emails.add(new Email("Profissional", "kfontana@paytech.com.br"));
         Contato contato = new Contato("Kauan", "Ramos Fontana", LocalDate.of(2005, 6, 22), telefones, emails);
 
+        ArrayList<Telefone> telefonesP = new ArrayList<Telefone>();
+        ArrayList<Email> emailsP = new ArrayList<Email>();
+        telefonesP.add(new Telefone("Pessoal", "+5548992344028"));
+        emailsP.add(new Email("Pessoal", "pessoa@a.com"));
+        emailsP.add(new Email("Profissional", "pessoa@job.com.br"));
+        Contato contatoP = new Contato("Pessoa", "Surname", LocalDate.of(1999, 1, 1), telefonesP, emailsP);
+
         ArrayList<Contato> contatos = new ArrayList<Contato>();
         contatos.add(contato);
+        contatos.add(contatoP);
+        App app = new App();
+        app.agenda = new Agenda(contatos);
+        app.menu();
 
-        Agenda agenda = new Agenda(contatos);
-
-        System.out.println(agenda);
 
     }
+
+    public void menu(){
+        Scanner sc = new Scanner(System.in);
+        int op;
+        while(true){
+            System.out.println("1. Listar Contatos.");
+            System.out.println("2. Listar Dados de Um Contato.");
+            System.out.println("3. Adicionar Contato.");
+            System.out.println("4. Remover Contato.");
+            System.out.println("5. Opções para Dados de Um Contato.");
+            System.out.print("\nSelecione uma opção: ");
+            op = sc.nextInt();
+            switch (op){
+                case 1:
+                    System.out.println(this.agenda);
+                    break;
+                case 2:
+                    System.out.println("\nQual é o identificador do contato desejado? ");
+                    op = sc.nextInt();
+                    try {
+                        System.out.println(this.agenda.getContato(op));
+                        break;
+                    } catch (Exception e){
+                        System.out.println("\nNão foi encontrado nenhum contato com esse identificador!");
+                        break;
+                    }
+                default:
+                    System.out.println("\nNão foi encontrada nenhuma opção para o valor digitado!");
+
+            }
+
+            System.out.println("\nPara executar outra ação digite 1, ou outro número para finalizar o programa: ");
+            op = sc.nextInt();
+            if(op != 1){
+                return;
+            }
+
+        }
+    }
+
+    private void opcoesContato(){
+        System.out.println("1. Adicionar Telefone ao Contato.");
+        System.out.println("2. Adicionar Email ao Contato.");
+    }
+
 }

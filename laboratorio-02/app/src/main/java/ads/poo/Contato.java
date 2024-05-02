@@ -51,13 +51,14 @@ public class Contato {
     }
 
     public String toString(){
-        return String.format("nome: %s, sobrenome: %s, data de nascimento: %s, telefones: %s, emails: %s", this.nome, this.sobrenome, dataNasc.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), formatArrayListToString(this.telefones), formatArrayListToString(this.emails));
+        return String.format("\n\t nome: %s,\n\t sobrenome: %s,\n\t data de nascimento: %s,\n\t telefones: %s,\n\t emails: %s", this.nome, this.sobrenome, dataNasc.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), formatArrayListToString(this.telefones), formatArrayListToString(this.emails));
     }
 
     private String formatArrayListToString(ArrayList<?> arrayList){
         StringBuilder sb = new StringBuilder();
         sb.append("(");
         for (int i = 0; i < arrayList.size(); i++) {
+            sb.append("\n\t\t ");
             sb.append(i);
             sb.append(" - ");
             sb.append(arrayList.get(i));
@@ -65,7 +66,7 @@ public class Contato {
                 sb.append(", ");
             }
         }
-        sb.append(")");
+        sb.append("\n\t )");
         return sb.toString();
     }
 
