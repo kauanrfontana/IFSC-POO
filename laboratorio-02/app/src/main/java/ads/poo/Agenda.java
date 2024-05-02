@@ -49,6 +49,11 @@ public class Agenda {
         return this.contatos.get(index);
     }
 
+    public boolean updateContato(int index, Contato contato){
+        this.contatos.set(index, contato);
+        return true;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
 

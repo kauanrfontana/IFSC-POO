@@ -51,7 +51,7 @@ public class App {
                     System.out.println(this.agenda);
                     break;
                 case 2:
-                    System.out.println("\nQual é o identificador do contato desejado? ");
+                    System.out.print("\nQual é o identificador do contato desejado? ");
                     op = sc.nextInt();
                     try {
                         System.out.println(this.agenda.getContato(op));
@@ -60,12 +60,15 @@ public class App {
                         System.out.println("\nNão foi encontrado nenhum contato com esse identificador!");
                         break;
                     }
+                case 5:
+                    opcoesContato(sc);
+                    break;
                 default:
                     System.out.println("\nNão foi encontrada nenhuma opção para o valor digitado!");
 
             }
 
-            System.out.println("\nPara executar outra ação digite 1, ou outro número para finalizar o programa: ");
+            System.out.print("\nPara executar outra ação digite 1, ou outro número para finalizar o programa: ");
             op = sc.nextInt();
             if(op != 1){
                 return;
@@ -74,9 +77,63 @@ public class App {
         }
     }
 
-    private void opcoesContato(){
-        System.out.println("1. Adicionar Telefone ao Contato.");
-        System.out.println("2. Adicionar Email ao Contato.");
+    private void opcoesContato(Scanner sc){
+        System.out.println("1. Atualizar Contato.");
+        System.out.println("2. Adicionar Telefone ao Contato.");
+        System.out.println("3. Adicionar Email ao Contato.");
+        System.out.println("4. Remover Telefone do Contato.");
+        System.out.println("5. Remover Email do Contato.");
+
+        int op = sc.nextInt();
+        switch (op){
+            case 1:
+                System.out.print("\nQual é o identificador do contato desejado? ");
+                op = sc.nextInt();
+                try {
+                    if(this.agenda.getContato(op) != null){
+                        System.out.print("\nInforme os nome, sobrenome, e data de nascimento do contato(22-06-2005): ");
+                        sc.nextLine();
+                        String dadosPrimarios = sc.nextLine().replaceAll(" ", "");
+                        String nome  = dadosPrimarios.split(",")[0];
+                        String sobrenome = dadosPrimarios.split(",")[1];
+                        LocalDate dataNasc = formataData(dadosPrimarios.split(",")[2]);
+
+                        System.out.print("\nAgora informe os telefones do contato(pessoal:+554899999999, profissional:+5549...): ");
+                        String dadosTelefonicos = sc.nextLine().replaceAll(" ", "");
+                        ArrayList<Telefone> telefones = new ArrayList<Telefone>();
+                        for(String telefone : dadosTelefonicos.split(",")){
+                            telefones.add(new Telefone(telefone.split(":")[0], telefone.split(":")[1]));
+                        }
+
+                        System.out.print("\nPor fim informe os emails do contato(pessoal:a@a.com, profissional:b@b.com...): ");
+                        String dadosEmail = sc.nextLine().replaceAll(" ", "");
+                        ArrayList<Email> emails = new ArrayList<Email>();
+                        for(String email : dadosEmail.split(",")){
+                            emails.add(new Email(email.split(":")[0], email.split(":")[1]));
+                        }
+
+                        if(this.agenda.updateContato(op, new Contato(nome, sobrenome, dataNasc, telefones, emails))){
+                            System.out.println("\nContato atualizado com sucesso!");
+                        }
+                    }
+                    break;
+                } catch (Exception e){
+                    if(e instanceof IndexOutOfBoundsException){
+                        System.out.println("\nNão foi encontrado nenhum contato com esse identificador!");
+                    }else{
+                        System.out.println("\nErro ao atualizar contato!");
+                    }
+                    break;
+                }
+        }
+    }
+
+    private LocalDate formataData(String data){
+        int[] partesData = new int[3];
+        partesData[0] = Integer.parseInt(data.split("-")[0]);
+        partesData[1] = Integer.parseInt(data.split("-")[1]);
+        partesData[2] = Integer.parseInt(data.split("-")[2]);
+        return LocalDate.of(partesData[2], partesData[1], partesData[0]);
     }
 
 }
