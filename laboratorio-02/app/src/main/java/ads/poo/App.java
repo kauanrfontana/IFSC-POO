@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
-    public Agenda agenda;
+    private Agenda agenda;
 
     public static void main(String[] args) {
         ArrayList<Telefone> telefones = new ArrayList<Telefone>();
