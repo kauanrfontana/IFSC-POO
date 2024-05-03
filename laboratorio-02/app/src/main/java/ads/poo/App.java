@@ -3,6 +3,7 @@
  */
 package ads.poo;
 
+import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -60,6 +61,51 @@ public class App {
                         System.out.println("\nNão foi encontrado nenhum contato com esse identificador!");
                         break;
                     }
+                case 3:
+                    System.out.print("\nInforme os nome, sobrenome, e data de nascimento do contato(22-06-2005): ");
+                    sc.nextLine();
+                    String dadosPrimarios = sc.nextLine().replaceAll(" ", "");
+                    if(dadosPrimarios.split(",").length != 3){
+                        throw new InvalidParameterException();
+                    }
+                    String nome  = dadosPrimarios.split(",")[0];
+                    String sobrenome = dadosPrimarios.split(",")[1];
+                    LocalDate dataNasc = formataData(dadosPrimarios.split(",")[2]);
+
+                    System.out.print("\nAgora informe os telefones do contato(pessoal:+554899999999, profissional:+5549...): ");
+                    String dadosTelefonicos = sc.nextLine().replaceAll(" ", "");
+                    if(dadosTelefonicos.split(":").length < 2){
+                        throw new InvalidParameterException();
+                    }
+                    ArrayList<Telefone> telefones = new ArrayList<Telefone>();
+                    for(String telefone : dadosTelefonicos.split(",")){
+                        telefones.add(new Telefone(telefone.split(":")[0], telefone.split(":")[1]));
+                    }
+
+                    System.out.print("\nPor fim informe os emails do contato(pessoal:a@a.com, profissional:b@b.com...): ");
+                    String dadosEmail = sc.nextLine().replaceAll(" ", "");
+                    if(dadosEmail.split(":").length < 2){
+                        throw new InvalidParameterException();
+                    }
+
+                    ArrayList<Email> emails = new ArrayList<Email>();
+                    for(String email : dadosEmail.split(",")){
+                        emails.add(new Email(email.split(":")[0], email.split(":")[1]));
+                    }
+
+                    if(this.agenda.addContato(new Contato(nome, sobrenome, dataNasc, telefones, emails))){
+                        System.out.println("\nContato adicionado com sucesso!");
+                    }
+                    break;
+                case 4:
+                    System.out.print("\nInforme o identificador do contato que deseja remover: ");
+                    int id = sc.nextInt();
+                    if(this.agenda.removeContato(id)){
+                        System.out.println("\nContato removido com sucesso!");
+                    }else{
+                        System.out.println("\nNão foi encontrado nenhum contato com este identificador!");
+                    }
+                    break;
                 case 5:
                     opcoesContato(sc);
                     break;
@@ -78,28 +124,35 @@ public class App {
     }
 
     private void opcoesContato(Scanner sc){
-        System.out.println("1. Atualizar Contato.");
-        System.out.println("2. Adicionar Telefone ao Contato.");
-        System.out.println("3. Adicionar Email ao Contato.");
-        System.out.println("4. Remover Telefone do Contato.");
-        System.out.println("5. Remover Email do Contato.");
+        System.out.print("\nQual é o identificador do contato desejado? ");
+        int id = sc.nextInt();
+        try {
+            if(this.agenda.getContato(id) != null){
+                System.out.println("1. Atualizar Contato.");
+                System.out.println("2. Adicionar Telefone ao Contato.");
+                System.out.println("3. Adicionar Email ao Contato.");
+                System.out.println("4. Remover Telefone do Contato.");
+                System.out.println("5. Remover Email do Contato.");
 
-        int op = sc.nextInt();
-        switch (op){
-            case 1:
-                System.out.print("\nQual é o identificador do contato desejado? ");
-                op = sc.nextInt();
-                try {
-                    if(this.agenda.getContato(op) != null){
+                int op = sc.nextInt();
+
+                switch (op){
+                    case 1:
                         System.out.print("\nInforme os nome, sobrenome, e data de nascimento do contato(22-06-2005): ");
                         sc.nextLine();
                         String dadosPrimarios = sc.nextLine().replaceAll(" ", "");
+                        if(dadosPrimarios.split(",").length != 3){
+                            throw new InvalidParameterException();
+                        }
                         String nome  = dadosPrimarios.split(",")[0];
                         String sobrenome = dadosPrimarios.split(",")[1];
                         LocalDate dataNasc = formataData(dadosPrimarios.split(",")[2]);
 
                         System.out.print("\nAgora informe os telefones do contato(pessoal:+554899999999, profissional:+5549...): ");
                         String dadosTelefonicos = sc.nextLine().replaceAll(" ", "");
+                        if(dadosTelefonicos.split(":").length < 2){
+                            throw new InvalidParameterException();
+                        }
                         ArrayList<Telefone> telefones = new ArrayList<Telefone>();
                         for(String telefone : dadosTelefonicos.split(",")){
                             telefones.add(new Telefone(telefone.split(":")[0], telefone.split(":")[1]));
@@ -107,24 +160,80 @@ public class App {
 
                         System.out.print("\nPor fim informe os emails do contato(pessoal:a@a.com, profissional:b@b.com...): ");
                         String dadosEmail = sc.nextLine().replaceAll(" ", "");
+                        if(dadosEmail.split(":").length < 2){
+                            throw new InvalidParameterException();
+                        }
+
                         ArrayList<Email> emails = new ArrayList<Email>();
                         for(String email : dadosEmail.split(",")){
                             emails.add(new Email(email.split(":")[0], email.split(":")[1]));
                         }
 
-                        if(this.agenda.updateContato(op, new Contato(nome, sobrenome, dataNasc, telefones, emails))){
+                        if(this.agenda.updateContato(id, new Contato(nome, sobrenome, dataNasc, telefones, emails))){
                             System.out.println("\nContato atualizado com sucesso!");
                         }
-                    }
-                    break;
-                } catch (Exception e){
-                    if(e instanceof IndexOutOfBoundsException){
-                        System.out.println("\nNão foi encontrado nenhum contato com esse identificador!");
-                    }else{
-                        System.out.println("\nErro ao atualizar contato!");
-                    }
-                    break;
+                        break;
+                    case 2:
+                        System.out.print("\nInforme o telefones para adicionar ao contato(pessoal:+554899999999): ");
+                        sc.nextLine();
+                        String telefone = sc.nextLine().replaceAll(" ", "");
+                        if(telefone.split(":").length < 2){
+                            throw new InvalidParameterException();
+                        }
+                        if(this.agenda.addTelefone(id, new Telefone(telefone.split(":")[0], telefone.split(":")[1]))){
+                            System.out.println("\nTelefone adicionado com sucesso!");
+                        }
+                        break;
+                    case 3:
+                        System.out.print("\nInforme o email para adicionar ao contato(pessoal:a@a.com): ");
+                        sc.nextLine();
+                        String email = sc.nextLine().replaceAll(" ", "");
+                        if(email.split(":").length < 2){
+                            throw new InvalidParameterException();
+                        }
+                        if(this.agenda.addEmail(id, new Email(email.split(":")[0], email.split(":")[1]))){
+                            System.out.println("\nEmail adicionado com sucesso!");
+                        }
+                        break;
+                    case 4:
+                        System.out.print("\nInforme o identificador do telefone que deseja remover: ");
+                        int telId = sc.nextInt();
+                        if(this.agenda.removeTelefone(id, telId)){
+                            System.out.println("\nTelefone removido com sucesso!");
+                        }else{
+                            System.out.println("\nNão foi encontrado nenhum telefone com este identificador!");
+                        }
+                        break;
+                    case 5:
+                        System.out.print("\nInforme o identificador do email que deseja remover: ");
+                        int emailId = sc.nextInt();
+                        if(this.agenda.removeEmail(id, emailId)){
+                            System.out.println("\nEmail removido com sucesso!");
+                        }else{
+                            System.out.println("\nNão foi encontrado nenhum email com este identificador!");
+                        }
+                        break;
+                    default:
+                        System.out.println("\nNão foi encontrada nenhuma opção para o valor digitado!");
+
                 }
+            }
+        }catch (Exception e){
+            switch (e) {
+                case IndexOutOfBoundsException indexOutOfBoundsException -> {
+                    System.out.println("\nNão foi encontrado nenhum contato com esse identificador!");
+                }
+                case InvalidParameterException invalidParameterException -> {
+                    System.out.println("\nParâmetros informados de forma inválida!");
+                }
+                case IllegalArgumentException illegalArgumentException -> {
+                    System.out.println("\nEmail em formato inválido!");
+                }
+                default -> {
+                    System.out.println("\nErro ao atualizar contato!");
+                }
+            }
+
         }
     }
 

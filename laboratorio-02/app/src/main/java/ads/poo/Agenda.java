@@ -21,16 +21,20 @@ public class Agenda {
         return true;
     }
 
-    public boolean addTelefone(int index, String rotulo, String valor) {
-        return this.contatos.get(index).AddTelefone(rotulo, valor);
+    public boolean addTelefone(int index, Telefone telefone) {
+        return this.contatos.get(index).AddTelefone(telefone);
     }
 
-    public boolean addEmail(int index, String rotulo, String valor) {
-        return this.contatos.get(index).AddEmail(rotulo, valor);
+    public boolean addEmail(int index, Email email) {
+        return this.contatos.get(index).AddEmail(email);
     }
 
     public boolean updateTelefone(int index, int telIndex, String rotulo, String valor) {
-        return this.contatos.get(index).updateTelefone(telIndex, rotulo, valor);
+        try {
+            return this.contatos.get(index).updateTelefone(telIndex, rotulo, valor);
+        }catch (Exception e){
+            return false;
+        }
     }
 
     public boolean updateEmail(int index, int emailIndex, String rotulo, String valor) {
@@ -38,11 +42,19 @@ public class Agenda {
     }
 
     public boolean removeTelefone(int index, int telIndex) {
-        return this.contatos.get(index).removeTelefone(telIndex);
+        try {
+            return this.contatos.get(index).removeTelefone(telIndex);
+        }catch (Exception e){
+            return false;
+        }
     }
 
     public boolean removeEmail(int index, int emailIndex) {
-        return this.contatos.get(index).removeEmail(emailIndex);
+        try {
+            return this.contatos.get(index).removeEmail(emailIndex);
+        }catch (Exception e){
+            return false;
+        }
     }
 
     public Contato getContato(int index){

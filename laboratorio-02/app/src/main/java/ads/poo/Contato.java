@@ -22,12 +22,12 @@ public class Contato {
         this.emails = emails;
     }
 
-    public boolean AddTelefone(String rotulo, String valor){
-        return this.telefones.add(new Telefone(rotulo, valor));
+    public boolean AddTelefone(Telefone telefone){
+        return this.telefones.add(telefone);
     }
 
-    public boolean AddEmail(String rotulo, String valor){
-        return this.emails.add(new Email(rotulo, valor));
+    public boolean AddEmail(Email email){
+        return this.emails.add(email);
     }
 
     public boolean removeTelefone(int index){
