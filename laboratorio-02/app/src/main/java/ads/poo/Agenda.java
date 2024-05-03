@@ -17,8 +17,12 @@ public class Agenda {
     }
 
     public boolean removeContato(int index) {
-        this.contatos.remove(index);
-        return true;
+        try {
+            this.contatos.remove(index);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     public boolean addTelefone(int index, Telefone telefone) {
