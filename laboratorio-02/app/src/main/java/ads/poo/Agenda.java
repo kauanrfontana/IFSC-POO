@@ -33,16 +33,16 @@ public class Agenda {
         return this.contatos.get(index).AddEmail(email);
     }
 
-    public boolean updateTelefone(int index, int telIndex, String rotulo, String valor) {
+    public boolean updateTelefone(int index, int telIndex, Telefone telefone) {
         try {
-            return this.contatos.get(index).updateTelefone(telIndex, rotulo, valor);
+            return this.contatos.get(index).updateTelefone(telIndex, telefone);
         }catch (Exception e){
             return false;
         }
     }
 
-    public boolean updateEmail(int index, int emailIndex, String rotulo, String valor) {
-        return this.contatos.get(index).updateEmail(emailIndex, rotulo, valor);
+    public boolean updateEmail(int index, int emailIndex, Email email) {
+        return this.contatos.get(index).updateEmail(emailIndex, email);
     }
 
     public boolean removeTelefone(int index, int telIndex) {

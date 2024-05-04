@@ -40,13 +40,13 @@ public class Contato {
         return true;
     }
 
-    public boolean updateTelefone(int index, String rotulo, String valor){
-        this.telefones.set(index, new Telefone(rotulo, valor));
+    public boolean updateTelefone(int index, Telefone telefone){
+        this.telefones.set(index, telefone);
         return true;
     }
 
-    public boolean updateEmail(int index, String rotulo, String valor){
-        this.emails.set(index, new Email(rotulo, valor));
+    public boolean updateEmail(int index, Email email){
+        this.emails.set(index, email);
         return true;
     }
 

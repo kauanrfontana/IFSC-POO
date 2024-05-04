@@ -79,7 +79,11 @@ public class App {
                     }
                     ArrayList<Telefone> telefones = new ArrayList<Telefone>();
                     for(String telefone : dadosTelefonicos.split(",")){
-                        telefones.add(new Telefone(telefone.split(":")[0], telefone.split(":")[1]));
+                        if(telefone.split(":")[1].replace("+", "").matches("[0-9]+")){
+                            telefones.add(new Telefone(telefone.split(":")[0], telefone.split(":")[1]));
+                        }else{
+                            System.out.println("\nTelefone (" + telefone.split(":")[1] + ") informado é inválido e não foi adicionado!");
+                        }
                     }
 
                     System.out.print("\nPor fim informe os emails do contato(pessoal:a@a.com, profissional:b@b.com...): ");
@@ -124,6 +128,8 @@ public class App {
     }
 
     private void opcoesContato(Scanner sc){
+        int telId, emailId;
+        String dadosTelefonicos, dadosEmail;
         System.out.print("\nQual é o identificador do contato desejado? ");
         int id = sc.nextInt();
         try {
@@ -133,7 +139,10 @@ public class App {
                 System.out.println("3. Adicionar Email ao Contato.");
                 System.out.println("4. Remover Telefone do Contato.");
                 System.out.println("5. Remover Email do Contato.");
+                System.out.println("6. Atualizar Telefone do Contato.");
+                System.out.println("7. Atualizar Email do Contato.");
 
+                System.out.print("\nSelecione uma opção: ");
                 int op = sc.nextInt();
 
                 switch (op){
@@ -149,17 +158,21 @@ public class App {
                         LocalDate dataNasc = formataData(dadosPrimarios.split(",")[2]);
 
                         System.out.print("\nAgora informe os telefones do contato(pessoal:+554899999999, profissional:+5549...): ");
-                        String dadosTelefonicos = sc.nextLine().replaceAll(" ", "");
+                        dadosTelefonicos = sc.nextLine().replaceAll(" ", "");
                         if(dadosTelefonicos.split(":").length < 2){
                             throw new InvalidParameterException();
                         }
                         ArrayList<Telefone> telefones = new ArrayList<Telefone>();
                         for(String telefone : dadosTelefonicos.split(",")){
-                            telefones.add(new Telefone(telefone.split(":")[0], telefone.split(":")[1]));
+                            if(telefone.split(":")[1].replace("+", "").matches("[0-9]+")){
+                                telefones.add(new Telefone(telefone.split(":")[0], telefone.split(":")[1]));
+                            }else{
+                                System.out.println("\nTelefone (" + telefone.split(":")[1] + ") informado é inválido e não foi adicionado!");
+                            }
                         }
 
                         System.out.print("\nPor fim informe os emails do contato(pessoal:a@a.com, profissional:b@b.com...): ");
-                        String dadosEmail = sc.nextLine().replaceAll(" ", "");
+                        dadosEmail = sc.nextLine().replaceAll(" ", "");
                         if(dadosEmail.split(":").length < 2){
                             throw new InvalidParameterException();
                         }
@@ -180,9 +193,14 @@ public class App {
                         if(telefone.split(":").length < 2){
                             throw new InvalidParameterException();
                         }
-                        if(this.agenda.addTelefone(id, new Telefone(telefone.split(":")[0], telefone.split(":")[1]))){
-                            System.out.println("\nTelefone adicionado com sucesso!");
+                        if(telefone.split(":")[1].replace("+", "").matches("[0-9]+")){
+                            if(this.agenda.addTelefone(id, new Telefone(telefone.split(":")[0], telefone.split(":")[1]))){
+                                System.out.println("\nTelefone adicionado com sucesso!");
+                            }
+                        }else{
+                            System.out.println("\nTelefone (" + telefone.split(":")[1] + ") informado é inválido e não foi adicionado!");
                         }
+
                         break;
                     case 3:
                         System.out.print("\nInforme o email para adicionar ao contato(pessoal:a@a.com): ");
@@ -197,7 +215,7 @@ public class App {
                         break;
                     case 4:
                         System.out.print("\nInforme o identificador do telefone que deseja remover: ");
-                        int telId = sc.nextInt();
+                        telId = sc.nextInt();
                         if(this.agenda.removeTelefone(id, telId)){
                             System.out.println("\nTelefone removido com sucesso!");
                         }else{
@@ -206,13 +224,38 @@ public class App {
                         break;
                     case 5:
                         System.out.print("\nInforme o identificador do email que deseja remover: ");
-                        int emailId = sc.nextInt();
+                        emailId = sc.nextInt();
                         if(this.agenda.removeEmail(id, emailId)){
                             System.out.println("\nEmail removido com sucesso!");
                         }else{
                             System.out.println("\nNão foi encontrado nenhum email com este identificador!");
                         }
                         break;
+                    case 6:
+                        System.out.print("\nInforme o identificador do telefone que deseja alterar: ");
+                        telId = sc.nextInt();
+                        sc.nextLine();
+                        dadosTelefonicos = sc.nextLine();
+                        if(dadosTelefonicos.split(":")[1].replace("+", "").matches("[0-9]+")){
+                            if(this.agenda.updateTelefone(id, telId, new Telefone(dadosTelefonicos.split(":")[0], dadosTelefonicos.split(":")[1]))){
+                                System.out.println("\nTelefone atualizado com sucesso!");
+                            }else{
+                                System.out.println("\nNão foi encontrado nenhum email com este identificador!");
+                            }
+                        }else{
+                            System.out.println("\nTelefone (" + dadosTelefonicos.split(":")[1] + ") informado é inválido e não foi adicionado!");
+                        }
+
+                    case 7:
+                        System.out.print("\nInforme o identificador do email que deseja alterar: ");
+                        emailId = sc.nextInt();
+                        sc.nextLine();
+                        dadosEmail = sc.nextLine();
+                        if(this.agenda.updateEmail(id, emailId, new Email(dadosEmail.split(":")[0], dadosEmail.split(":")[1]))){
+                            System.out.println("\nEmail atualizado com sucesso!");
+                        }else{
+                            System.out.println("\nNão foi encontrado nenhum email com este identificador!");
+                        }
                     default:
                         System.out.println("\nNão foi encontrada nenhuma opção para o valor digitado!");
 
