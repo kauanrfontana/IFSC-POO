@@ -43,24 +43,30 @@ classDiagram
 ```mermaid
 classDiagram
     class Edificio {
-        - ArrayList~Morador~ moradores
         - ArrayList~Apartamento~ apartamentos
-        - ArrayList~Funionario~ funcionarios
+        - ArrayList~Funcionario~ funcionarios
         - HashMap~int, VagaGaragem~ vagasGaragem
         - HashMap~int, DepositoPrivativo~ depositosPrivativos
-       
+        + addFuncionario(Funcionario funcionario) void
+        + removeFuncionario(Funcionario funcionario) void
+        + addApartamento(Apartamento apartamento) void
+        + removeApartamento(Apartamento apartamento) void
+        + addVagaGaragem(VagaGaragem vagaGaragem) void
+        + removeVagaGaragem(VagaGaragem vagaGaragem) void
+        + addDepositoPrivativo(DepositoPrivativo depositoPrivativo) void
+        + removeDepositoPrivativo(DepositoPrivativo depositoPrivativo) void
     }
     
     class Apartamento {
       - int numero
-      - ArrayList~VagaGaragem~ vagasGaragem
       - ArrayList~DepositoPrivativo~ depositosPrivativos
+      - ArrayList~VagaGaragem~ vagasGaragem
       - ArrayList~Morador~ moradores
     }
     
     class Morador {
         - String nome
-        - int numeroApartamento
+        - ArrayList~Carro~ carros
     }
 
     class Funcionario {
@@ -69,21 +75,30 @@ classDiagram
     }
 
     class VagaGaragem {
-        - int numeroApartamento
+        - int tamanho
     }
 
     class DepositoPrivativo {
-        - int numeroApartamento
-        
+        - int tamanho
     }
 
     class Carro {
-
+        - String modelo
+        - String cor
+        - int ano
     }
 
     class Condominio {
-
+        - ArrayList~Edificio~ edificios
+        - String nome
     }
-    
+
+    Condominio *-- Edificio
+    Edificio *-- Funcionario
+    Edificio *-- Apartamento
+    Apartamento *-- Morador
+    Apartamento *-- VagaGaragem
+    Apartamento *-- DepositoPrivativo
+    Morador *-- Carro
    
 ```
