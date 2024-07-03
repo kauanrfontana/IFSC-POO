@@ -102,3 +102,33 @@ classDiagram
     Morador *-- Carro
    
 ```
+
+```mermaid
+classDiagram
+   class Aviao {
+       - ArrayList~Motor~ motores
+       - boolean possuiHelice
+       - boolean possuiTurbina
+       - float peso
+       - int maxTripulantes
+       - int maxPassageiros
+       + acelerar(Motor motor, float potencia) void
+       + frear(Motor motor, float potencia) void
+       + ligar() void
+       + desligar() void
+       + direcionar(String direcao, float potencia)
+   }
+  
+   class Motor {
+       - int maxRpm
+       - float potenciaAtual
+       - String material
+   }
+  
+  
+  
+   Aviao *-- Motor
+  
+```
+
+
